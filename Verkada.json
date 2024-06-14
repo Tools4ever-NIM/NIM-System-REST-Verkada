@@ -1,0 +1,186 @@
+{
+    "schema": {
+      "options": {},
+      "crud_objects": {
+        "access_groups": {
+            "operations": {
+              "access_groupsList": {
+                "method": "get",
+                "call": {
+                  "mode": "normal",
+                  "path": "/access/v1/access_groups"
+                },
+                "processing_options": {
+                  "output_field": "access_groups"
+                },
+                "query_parameters": {}
+              }
+            },
+            "parameters": {},
+            "key": "user_id",
+            "resources": {
+              "group_id": "string*",
+              "name": "string*"
+            }
+        },
+        "access_groups_members": {
+            "operations": {
+              "access_groupsList": {
+                "method": "get",
+                "call": {
+                    "mode": "iteration",
+                    "table": "access_groups",
+                    "iterator": "group_id",
+                    "path": "/access/v1/access_groups/group?group_id={iterator}",
+                    "base": {
+                        "group_id": "{iterator}"
+                    }
+                },
+                "processing_options": {
+                  "output_field": "user_ids",
+                  "stringArrayColumnName": "user_id"
+                },
+                "query_parameters": {},
+                "maxSessionCount": 5,
+                "warning_only": [404]
+              }
+            },
+            "parameters": {},
+            "key": "user_id",
+            "resources": {
+              "group_id": "string*",
+              "user_id": "string*"
+            }
+        },
+        "access_users": {
+          "operations": {
+            "access_usersList": {
+              "method": "get",
+              "call": {
+                "mode": "normal",
+                "path": "/access/v1/access_users"
+              },
+              "processing_options": {
+                "output_field": "access_members"
+              },
+              "query_parameters": {}
+            }
+          },
+          "parameters": {},
+          "key": "user_id",
+          "resources": {
+            "email": "string*",
+            "employee_id": "string*",
+            "full_name": "string*",
+            "user_id": "string*"
+          }
+        },
+        "access_users_details": {
+            "operations": {
+              "access_users_detailsList": {
+                "method": "get",
+                "call": {
+                  "mode": "iteration",
+                  "table": "access_users",
+                  "iterator": "user_id",
+                  "path": "/access/v1/access_users/user?user_id={iterator}"
+                },
+                "processing_options": {
+                  "output_field": null
+                },
+                "query_parameters": {},
+                "maxSessionCount": 5,
+                "warning_only": [404]
+              }
+            },
+            "parameters": {},
+            "key": "user_id",
+            "resources": {
+                "access_groups": [
+                    {
+                        "group_id": "string*",
+                        "name": "string*"
+                    }
+                ],
+                "ble_unlock": "boolean*",
+                "cards": [
+                    {
+                        "active": "boolean*",
+                        "card_id": "string*",
+                        "card_number": "string*",
+                        "card_number_base36": "string*",
+                        "card_number_hex": "string*",
+                        "facility_code": "string*",
+                        "type": "string*"
+                    }
+                ],
+                "end_date": "string*",
+                "entry_code": "string*",
+                "external_id": "string*",
+                "license_plates": "string*",
+                "remote_unlock": "string*",
+                "start_date": "string*",
+                "user_id": "string*"
+            }
+        }
+      }
+    },
+    "rest": {
+      "config": {
+        "baseUrl": "https://{tenant_id}",
+        "get": {
+          "maxPageCount": 5,
+          "query_parameters": {}
+        },
+        "authentication": "aeries",
+        "call_handling": "generic",
+        "test_connection": {
+          "url": "/access/v1/access_users"
+        },
+        "socket_timeout": 3600000,
+        "retry": [
+            {
+                "type": "statusCode",
+                "statusCode": 429,
+                "retry": {
+                    "type": "simple",
+                    "maxCount": 12,
+                    "waitTime": 5
+                }
+            },
+            {
+                "type": "statusCode",
+                "statusCode": 500,
+                "retry": {
+                    "type": "simple",
+                    "maxCount": 12,
+                    "waitTime": 5
+                }
+            },
+            {
+                "type": "connectionError"
+            }
+        ],
+        "accept": "application/json",
+        "headers": {
+          "x-api-key": "{client_secret}"
+        }
+      }
+    },
+    "connection": {
+      "items": [
+        {
+            "name": "organization_id",
+            "type": "textbox",
+            "label": "Organization ID:",
+            "value": ""
+        },
+        {
+            "name": "page_size",
+            "type": "textbox",
+            "label": "Page Size:",
+            "value": "100"
+        }
+      ]
+    }
+  }

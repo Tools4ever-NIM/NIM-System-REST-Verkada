@@ -90,7 +90,7 @@
                 },
                 "query_parameters": {},
                 "maxSessionCount": 5,
-                "warning_only": [404]
+                "warning_only": [404,400]
               }
             },
             "parameters": {},
@@ -127,7 +127,7 @@
     },
     "rest": {
       "config": {
-        "baseUrl": "https://{tenant_id}",
+        "baseUrl": "https://api.verkada.com",
         "get": {
           "maxPageCount": 5,
           "query_parameters": {}
@@ -174,12 +174,6 @@
             "type": "textbox",
             "label": "Organization ID:",
             "value": ""
-        },
-        {
-            "name": "page_size",
-            "type": "textbox",
-            "label": "Page Size:",
-            "value": "100"
         }
       ]
     }

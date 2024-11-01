@@ -6,10 +6,12 @@
 - Access Groups Members
 - Access Users
 - Access Users Details
+- Access Users Cards
 
 
 ## Actions
-
+- Access Users Cards
+    - Create card
 
 # NIM Docs
 The official NIM documentation can be found at: https://docs.nimsuite.com

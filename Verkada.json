@@ -96,30 +96,59 @@
             "parameters": {},
             "key": "user_id",
             "resources": {
-                "access_groups": [
-                    {
-                        "group_id": "string*",
-                        "name": "string*"
-                    }
-                ],
                 "ble_unlock": "boolean*",
-                "cards": [
-                    {
-                        "active": "boolean*",
-                        "card_id": "string*",
-                        "card_number": "string*",
-                        "card_number_base36": "string*",
-                        "card_number_hex": "string*",
-                        "facility_code": "string*",
-                        "type": "string*"
-                    }
-                ],
                 "end_date": "string*",
                 "entry_code": "string*",
                 "external_id": "string*",
                 "license_plates": "string*",
                 "remote_unlock": "string*",
                 "start_date": "string*",
+                "user_id": "string*"
+            }
+        },
+		"access_users_details_cards": {
+            "operations": {
+              "access_users_detailsList": {
+                "method": "get",
+                "call": {
+                  "mode": "iteration",
+                  "table": "access_users_details",
+                  "iterator": "user_id",
+                  "path": "/access/v1/access_users/user?user_id={iterator}",
+				  "base": {
+					"user_id": "{iterator}"
+				  }
+                },
+                "processing_options": {
+                  "output_field": "cards"
+                },
+                "query_parameters": {},
+                "maxSessionCount": 10,
+                "warning_only": [404,400]
+              },
+			  "access_users_details_cardsCreate": {
+                "method": "post",
+                "call": {
+                  "mode": "normal",
+				  "path": "/access/v1/credentials/card?user_id={user_id}"
+                },
+				"semantics": "create",
+				"resource_allowance_default": "optional",
+				"resource_mandatory": [
+					"user_id"
+				]
+              }
+            },
+            "parameters": {},
+            "key": "user_id",
+            "resources": {
+				"active": "boolean*",
+				"card_id": "string*",
+				"card_number": "string*",
+				"card_number_base36": "string*",
+				"card_number_hex": "string*",
+				"facility_code": "string*",
+				"type": "string*",            
                 "user_id": "string*"
             }
         }

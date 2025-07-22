@@ -1,6 +1,5 @@
 {
     "schema": {
-      "options": {},
       "crud_objects": {
         "access_groups": {
             "operations": {
@@ -12,11 +11,9 @@
                 },
                 "processing_options": {
                   "output_field": "access_groups"
-                },
-                "query_parameters": {}
+                }
               }
             },
-            "parameters": {},
             "key": "user_id",
             "resources": {
               "group_id": "string*",
@@ -40,12 +37,10 @@
                   "output_field": "user_ids",
                   "stringArrayColumnName": "user_id"
                 },
-                "query_parameters": {},
                 "maxSessionCount": 5,
                 "warning_only": [404]
               }
             },
-            "parameters": {},
             "key": "user_id",
             "resources": {
               "group_id": "string*",
@@ -62,11 +57,9 @@
               },
               "processing_options": {
                 "output_field": "access_members"
-              },
-              "query_parameters": {}
+              }
             }
           },
-          "parameters": {},
           "key": "user_id",
           "resources": {
             "email": "string*",
@@ -88,12 +81,10 @@
                 "processing_options": {
                   "output_field": null
                 },
-                "query_parameters": {},
                 "maxSessionCount": 5,
                 "warning_only": [404,400]
               }
             },
-            "parameters": {},
             "key": "user_id",
             "resources": {
                 "ble_unlock": "boolean*",
@@ -122,7 +113,6 @@
                 "processing_options": {
                   "output_field": "cards"
                 },
-                "query_parameters": {},
                 "maxSessionCount": 10,
                 "warning_only": [404,400]
               },
@@ -139,7 +129,6 @@
 				]
               }
             },
-            "parameters": {},
             "key": "user_id",
             "resources": {
 				"active": "boolean*",
@@ -156,12 +145,9 @@
     },
     "rest": {
       "config": {
-        "baseUrl": "https://api.verkada.com",
-        "get": {
-          "maxPageCount": 5,
-          "query_parameters": {}
-        },
-        "authentication": "aeries",
+        "baseUrl": "https://{tenant_id}",
+        "get": {},
+        "authentication": "custom_post_token",
         "call_handling": "generic",
         "test_connection": {
           "url": "/access/v1/access_users"
@@ -190,19 +176,48 @@
                 "type": "connectionError"
             }
         ],
-        "accept": "application/json",
-        "headers": {
-          "x-api-key": "{client_secret}"
+        "accept": "application/json"
+      },
+      "authOptions": {
+          "type": "custom_post_token",
+          "authUrl": "https://{tenant_id}/token",
+          "httpVerb": "post",
+          "postHeaders": {
+            "x-api-key": "{password}"
+          },
+          "tokenPath": "token",
+          "headerName": "x-verkada-auth",
+          "headerTemplate": "{token}"
         }
-      }
     },
     "connection": {
       "items": [
         {
+            "name": "tenant_id",
+            "type": "textbox",
+            "label": "Tenent URL:",
+            "value": "api.verkada.com",
+            "order": 1
+        },
+        {
+            "name": "user_name",
+            "type": "textbox",
+            "hidden": "!nofield",
+            "disabled": "true"
+        },
+        {
+            "name": "password",
+            "type": "textbox",
+            "label": "API Key",
+            "required": true,
+            "order": 2
+        },
+        {
             "name": "organization_id",
             "type": "textbox",
             "label": "Organization ID:",
-            "value": ""
+            "required": true,
+            "order": 3
         }
       ]
     }

@@ -1,4 +1,7 @@
 # Verkada
+
+Read the [Verkada integration documentation](https://docs.nimsuite.com/en/integrations/verkada) for connector details and related guides.
+
 <img src="https://github.com/Tools4ever-NIM/NIM-System-REST-CyberARK-PAM/assets/24281600/2c96808c-784d-4033-8bb3-09f95f98306b" width="256px" />
 
 ## Data Tables
